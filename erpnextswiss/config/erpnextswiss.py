@@ -68,10 +68,22 @@ def get_data():
             "icon": "fa fa-users",
             "items": [
                    {
+                       "type": "page",
+                       "name": "hr_control_board",
+                       "label": _("HR Control Board"),
+                       "description": _("HR Control Board")
+                   },
+				   {
                        "type": "doctype",
                        "name": "Salary Certificate",
                        "label": _("Salary Certificate"),
                        "description": _("Salary Certificate")
+                   },
+				   {
+                       "type": "doctype",
+                       "name": "HR Default Settings",
+                       "label": _("HR Default Settings"),
+                       "description": _("HR Default Settings")
                    }
             ]
         },

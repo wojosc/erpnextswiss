@@ -1,0 +1,56 @@
+<div class="panel-group" id="accordion">
+	{% for employee in employees %}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#{{ employee.name.replace("/", "") }}">{{ employee.employee_name }}</a>
+			</h4>
+		</div>
+		<div id="{{ employee.name.replace("/", "") }}" class="panel-collapse collapse">
+			<div class="panel-body">
+				<button type="button" class="btn btn-warning" data-employee="{{ employee.name }}" onclick="open_employee(this);">{{ __("Change Salary Structur") }}</button>
+				<div class="row">
+					<div class="col-xs-6">
+						<h4>{{ __("Earnings") }}</h4>
+						<table style="Width: 100%;" class="table-striped">
+							<tr>
+								<th>{{ __("Salary Component") }}</th>
+								<th>{{ __("Value") }}</th>
+								<th>{{ __("Condition") }}</th>
+							</tr>
+							{% for earning in earnings %}
+								{% if earning.parent == employee.name %}
+									<tr>
+										<td>{{ earning.salary_component }}</td>
+										<td>{{ earning.value }}</td>
+										<td>{{ earning.condition }}</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</table>
+					</div>
+					<div class="col-xs-6">
+						<h4>{{ __("Deductions") }}</h4>
+						<table style="Width: 100%;" class="table-striped">
+							<tr>
+								<th>{{ __("Salary Component") }}</th>
+								<th>{{ __("Value") }}</th>
+								<th>{{ __("Condition") }}</th>
+							</tr>
+							{% for deduction in deductions %}
+								{% if deduction.parent == employee.name %}
+									<tr>
+										<td>{{ deduction.salary_component }}</td>
+										<td>{{ deduction.value }}</td>
+										<td>{{ deduction.condition }}</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div> 
