@@ -49,6 +49,45 @@
 						</table>
 					</div>
 				</div>
+				<hr>
+				<div class="row">
+				{% var gross_pay = 0%}
+				{% for paid in already_paid %}
+					{% if paid.employee == employee.name %}
+						{% gross_pay = paid.gross_paid %}
+						<div class="col-xs-3">
+							<p><b>{{ __("Annual salary paid") }}:</b><br>CHF {{ Number(paid.gross_pay.toFixed(2)) }}</p>
+						</div>
+						<div class="col-xs-3">
+							<p style=" 
+							{% if Number(paid.gross_pay.toFixed(2)) > Number(cap_alv_1.toFixed(2)) %}
+								background-color: lightcoral;
+							{% endif %}
+							{% if Number(paid.gross_pay.toFixed(2)) < Number(cap_alv_1.toFixed(2)) %}
+								background-color: lightgreen;
+							{% endif %}"><b>{{ __("ALV I Cap") }}:</b><br>CHF {{ Number(cap_alv_1.toFixed(2)) }}</p>
+						</div>
+						<div class="col-xs-3">
+							<p style=" 
+							{% if Number(paid.gross_pay.toFixed(2)) > Number(cap_alv_2.toFixed(2)) %}
+								background-color: lightcoral;
+							{% endif %}
+							{% if Number(paid.gross_pay.toFixed(2)) < Number(cap_alv_2.toFixed(2)) %}
+								background-color: lightgreen;
+							{% endif %}"><b>{{ __("ALV II Cap") }}:</b><br>CHF {{ Number(cap_alv_2.toFixed(2)) }}</p>
+						</div>
+						<div class="col-xs-3">
+							<p style=" 
+							{% if Number(paid.gross_pay.toFixed(2)) > Number(cap_uvg.toFixed(2)) %}
+								background-color: lightcoral;
+							{% endif %}
+							{% if Number(paid.gross_pay.toFixed(2)) < Number(cap_uvg.toFixed(2)) %}
+								background-color: lightgreen;
+							{% endif %}"><b>{{ __("UVG Cap") }}:</b><br>CHF {{ Number(cap_uvg.toFixed(2)) }}</p>
+						</div>
+					{% endif %}
+				{% endfor %}
+				</div>
 			</div>
 		</div>
 	</div>

@@ -10,7 +10,11 @@
 			<div class="col-xs-1"></div>
 			<div class="col-xs-10">
 				<h3>{{ __("Employees") }}</h3>
-				<button type="button" class="btn btn-info"><i class="fa fa-repeat"></i></button><br><br>
+				<ul class="pagination">
+					<li><a style="background-color: lightgreen; border-color: lightgreen;">{{ __("Refresh") }}</a></li>
+					<li class="active" id="m_sal"><a onclick="change_sal_typ(this);">{{ __("Monthly Salary") }}</a></li>
+					<li id="h_sal"><a onclick="change_sal_typ(this);">{{ __("Hourly Salary") }}</a></li>
+				</ul>
 				<div id="employee_content_placeholder"></div>
 			</div>
 			<div class="col-xs-1"></div>
