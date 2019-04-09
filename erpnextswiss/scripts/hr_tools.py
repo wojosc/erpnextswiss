@@ -37,7 +37,7 @@ def create_salary_structure(emp):
 	row.base = 0
 	salary_structure.save()
 	
-	sync_earnings(salary_structure, emp)
+	sync_defaults(salary_structure, emp)
 	
 	return salary_structure
 
@@ -47,6 +47,7 @@ def sync_defaults(ss, emp):
 		ss.salary_slip_based_on_timesheet = emp.salary_based_on_timesheets
 	if emp.salary_based_on_timesheets == 1:
 		ss.salary_component = emp.salary_component
+		ss.hour_rate = emp.hour_rate
 	if emp.status == 'Activ':
 		ss.is_activ = 'Yes'
 	else:
@@ -65,6 +66,7 @@ def sync_earnings(ss, emp):
 		row.amount_based_on_formula = earning.amount_based_on_formula
 		row.formula = earning.formula
 		row.amount = earning.amount
+		row.statistical_component = earning.statistical_component
 	ss.save()
 	sync_deductions(ss, emp)
 	
@@ -77,4 +79,5 @@ def sync_deductions(ss, emp):
 		row.amount_based_on_formula = deduction.amount_based_on_formula
 		row.formula = deduction.formula
 		row.amount = deduction.amount
+		row.statistical_component = deduction.statistical_component
 	ss.save()

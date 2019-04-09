@@ -8,7 +8,15 @@
 		</div>
 		<div id="{{ employee.name.replace("/", "") }}" class="panel-collapse collapse">
 			<div class="panel-body">
-				<button type="button" class="btn btn-warning" data-employee="{{ employee.name }}" onclick="open_employee(this);">{{ __("Change Salary Structur") }}</button>
+				<button type="button" class="btn btn-warning" data-employee="{{ employee.name }}" onclick="open_employee(this);">{{ __("Change Salary Structure") }}</button>
+				{% if timesheet == 1 %}
+				<button type="button" class="btn btn-success" data-employee="{{ employee.name }}" onclick="add_fgz(this);">{{ __("Add FGZ") }}</button>
+				<button type="button" class="btn btn-success" data-employee="{{ employee.name }}" onclick="add_ggz(this);">{{ __("Add GGZ") }}</button>
+				{% else %}
+				<button type="button" class="btn btn-success" data-employee="{{ employee.name }}" onclick="">{{ __("Add 13. Salary") }}</button>
+				<button type="button" class="btn btn-success" data-employee="{{ employee.name }}" onclick="">{{ __("Add Bonus incl. Deduction") }}</button>
+				<button type="button" class="btn btn-success" data-employee="{{ employee.name }}" onclick="">{{ __("Add Bonus without Deduction") }}</button>
+				{% endif %}
 				<div class="row">
 					<div class="col-xs-6">
 						<h4>{{ __("Earnings") }}</h4>
@@ -54,9 +62,8 @@
 				{% var gross_pay = 0%}
 				{% for paid in already_paid %}
 					{% if paid.employee == employee.name %}
-						{% gross_pay = paid.gross_paid %}
 						<div class="col-xs-3">
-							<p><b>{{ __("Annual salary paid") }}:</b><br>CHF {{ Number(paid.gross_pay.toFixed(2)) }}</p>
+							<p style="padding-left: 10px;"><b>{{ __("Annual salary paid") }}:</b><br>CHF {{ Number(paid.gross_pay.toFixed(2)) }}</p>
 						</div>
 						<div class="col-xs-3">
 							<p style=" 
@@ -65,7 +72,7 @@
 							{% endif %}
 							{% if Number(paid.gross_pay.toFixed(2)) < Number(cap_alv_1.toFixed(2)) %}
 								background-color: lightgreen;
-							{% endif %}"><b>{{ __("ALV I Cap") }}:</b><br>CHF {{ Number(cap_alv_1.toFixed(2)) }}</p>
+							{% endif %} padding-left: 10px;"><b>{{ __("ALV I Cap") }}:</b><br>CHF {{ Number(cap_alv_1.toFixed(2)) }}</p>
 						</div>
 						<div class="col-xs-3">
 							<p style=" 
@@ -74,7 +81,7 @@
 							{% endif %}
 							{% if Number(paid.gross_pay.toFixed(2)) < Number(cap_alv_2.toFixed(2)) %}
 								background-color: lightgreen;
-							{% endif %}"><b>{{ __("ALV II Cap") }}:</b><br>CHF {{ Number(cap_alv_2.toFixed(2)) }}</p>
+							{% endif %} padding-left: 10px;"><b>{{ __("ALV II Cap") }}:</b><br>CHF {{ Number(cap_alv_2.toFixed(2)) }}</p>
 						</div>
 						<div class="col-xs-3">
 							<p style=" 
@@ -83,8 +90,50 @@
 							{% endif %}
 							{% if Number(paid.gross_pay.toFixed(2)) < Number(cap_uvg.toFixed(2)) %}
 								background-color: lightgreen;
-							{% endif %}"><b>{{ __("UVG Cap") }}:</b><br>CHF {{ Number(cap_uvg.toFixed(2)) }}</p>
+							{% endif %} padding-left: 10px;"><b>{{ __("UVG Cap") }}:</b><br>CHF {{ Number(cap_uvg.toFixed(2)) }}</p>
 						</div>
+					{% endif %}
+				{% endfor %}
+				{% for fgz_ggz in fgz_ggz_total %}
+					{% if fgz_ggz.employee == employee.name %}
+						<div class="col-xs-3">
+							<p style="padding-left: 10px;"><b>{{ __("Total FGZ") }}:</b><br>CHF {{ Number(fgz_ggz.fgz_total.toFixed(2)) }}</p>
+						</div>
+						{% for fgz in fgz_paid %}
+							{% if fgz.employee == employee.name %}
+								<div class="col-xs-3">
+									<p style="padding-left: 10px;"><b>{{ __("Total FGZ paid") }}:</b><br>CHF {{ Number(fgz.fgz.toFixed(2)) }}</p>
+								</div>
+								<div class="col-xs-6">
+									<p style=" 
+									{% if Number(fgz.fgz.toFixed(2)) > Number(fgz_ggz.fgz_total.toFixed(2)) %}
+										background-color: lightcoral;
+									{% endif %}
+									{% if Number(fgz.fgz.toFixed(2)) <= Number(fgz_ggz.fgz_total.toFixed(2)) %}
+										background-color: lightgreen;
+									{% endif %} padding-left: 10px;"><b>{{ __("FGZ Balance") }}:</b><br>CHF {{ Number(fgz_ggz.fgz_total.toFixed(2)) - Number(fgz.fgz.toFixed(2)) }}</p>
+								</div>
+							{% endif %}
+						{% endfor %}
+						<div class="col-xs-3">
+							<p style="padding-left: 10px;"><b>{{ __("Total GGZ") }}:</b><br>CHF {{ Number(fgz_ggz.ggz_total.toFixed(2)) }}</p>
+						</div>
+						{% for ggz in ggz_paid %}
+							{% if ggz.employee == employee.name %}
+								<div class="col-xs-3">
+									<p style="padding-left: 10px;"><b>{{ __("Total GGZ paid") }}:</b><br>CHF {{ Number(ggz.ggz.toFixed(2)) }}</p>
+								</div>
+								<div class="col-xs-6">
+									<p style=" 
+									{% if Number(ggz.ggz.toFixed(2)) > Number(fgz_ggz.ggz_total.toFixed(2)) %}
+										background-color: lightcoral;
+									{% endif %}
+									{% if Number(ggz.ggz.toFixed(2)) <= Number(fgz_ggz.ggz_total.toFixed(2)) %}
+										background-color: lightgreen;
+									{% endif %} padding-left: 10px;"><b>{{ __("GGZ Balance") }}:</b><br>CHF {{ Number(fgz_ggz.ggz_total.toFixed(2)) - Number(ggz.ggz.toFixed(2)) }}</p>
+								</div>
+							{% endif %}
+						{% endfor %}
 					{% endif %}
 				{% endfor %}
 				</div>

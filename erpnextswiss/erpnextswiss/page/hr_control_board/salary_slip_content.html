@@ -1,0 +1,48 @@
+<div class="panel-group" id="accordion3">
+	{% for salslip in salslips %}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion3" href="#{{ salslip.name_replaced }}">
+			{{ salslip.employee_name }}, {{ moment(salslip.posting_date).format(frappe.datetime.get_user_fmt().toUpperCase()) }}, CHF {{ salslip.rounded_total }}</a>
+			</h4>
+		</div>
+		<div id="{{ salslip.name_replaced }}" class="panel-collapse collapse">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-xs-6">
+						<h4>{{ __("Earnings") }}</h4>
+						<table class="table-striped" style="width: 100%;">
+							<tr>
+								<th>{{ __("Salary Component") }}</th>
+								<th>{{ __("Amount") }}</th>
+							</tr>
+							{% for earning in salslip.earnings %}
+							<tr>
+								<td>{{ earning.salary_component }}</td>
+								<td>CHF {{ earning.amount }}</td>
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
+					<div class="col-xs-6">
+						<h4>{{ __("Deductions") }}</h4>
+						<table class="table-striped" style="width: 100%;">
+							<tr>
+								<th>{{ __("Salary Component") }}</th>
+								<th>{{ __("Amount") }}</th>
+							</tr>
+							{% for deduction in salslip.decuctions %}
+							<tr>
+								<td>{{ deduction.salary_component }}</td>
+								<td>CHF {{ deduction.amount }}</td>
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div> 

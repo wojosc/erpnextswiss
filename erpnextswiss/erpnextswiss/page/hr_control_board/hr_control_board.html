@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
 	<li class="active"><a data-toggle="tab" href="#salary_settings">{{ __("Salary Settings") }}</a></li>
 	<li><a data-toggle="tab" href="#pay_roll">{{ __("Pay Roll") }}</a></li>
-	<li><a data-toggle="tab" href="#salary_slip">{{ __("Salary Slip") }}</a></li>
+	<li><a data-toggle="tab" href="#salary_slip">{{ __("Draft Salary Slips") }}</a></li>
 </ul>
 
 <div class="tab-content">
@@ -21,11 +21,101 @@
 		</div>
 	</div>
 	<div id="pay_roll" class="tab-pane fade">
-		<h3>Menu 1</h3>
-		<p>Some content in menu 1.</p>
+		<div class="panel-group" id="accordion2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion2" href="#new_payroll">
+					{{ __("Generate new Pay Roll") }}</a>
+					</h4>
+				</div>
+				<div id="new_payroll" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label for="payroll_frequency">{{ __("Payroll frequency") }}:</label>
+									<select class="form-control" id="payroll_frequency">
+										<option value="Monthly">{{ __("Monthly") }}</option>
+										<option value="Fortnightly">{{ __("Fortnightly") }}</option>
+										<option value="Weekly">{{ __("Weekly") }}</option>
+										<option value="Daily">{{ __("Daily") }}</option>
+									</select>
+								</div> 
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label for="payroll_type">{{ __("Payroll type") }}:</label>
+									<select class="form-control" id="payroll_type">
+										<option value="0">{{ __("Monthly Salary") }}</option>
+										<option value="1">{{ __("Hourly Salary") }}</option>
+									</select>
+								</div> 
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label>{{ __("Posting Date") }}:</label>
+									<div class="input-group date">
+										<input id="payroll_posting_date" class="form-control" name="desireddate" placeholder="Desired date" type="date">  
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span> 
+										</span>
+									</div>
+								</div> 
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-2"></div>
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label>{{ __("Periode Start") }}:</label>
+									<div class="input-group date">
+										<input id="payroll_start_date" class="form-control" name="desireddate" placeholder="Desired date" type="date">  
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span> 
+										</span>
+									</div>
+								</div> 
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label>{{ __("Periode End") }}:</label>
+									<div class="input-group date">
+										<input id="payroll_end_date" class="form-control" name="desireddate" placeholder="Desired date" type="date">  
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span> 
+										</span>
+									</div>
+								</div> 
+							</div>
+							<div class="col-xs-2"></div>
+						</div>
+						<div class="row">
+							<div class="col-xs-5"></div>
+							<div class="col-xs-2">
+								<button type="button" class="btn btn-success" onclick="create_payroll();">{{ __("Create Pay Roll") }}</button>
+							</div>
+							<div class="col-xs-5"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion2" href="#old_payroll" id="click_to_old_payroll">
+					{{ __("Existing Pay Rolls") }}</a>
+					</h4>
+				</div>
+				<div id="old_payroll" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div id="existing_payroll_content_placeholder"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div id="salary_slip" class="tab-pane fade">
-		<h3>Menu 2</h3>
-		<p>Some content in menu 2.</p>
+		<div id="salary_slip_content_placeholder"></div>
 	</div>
 </div>

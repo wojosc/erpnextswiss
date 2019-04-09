@@ -1,0 +1,31 @@
+<table class="table-striped" style="width: 100%;">
+	<tr>
+		<th>{{ __("Payroll") }}</th>
+		<th>{{ __("Posting Date") }}</th>
+		<th>{{ __("Periode") }}</th>
+		<th>{{ __("Type") }}</th>
+		<th>{{ __("Actions") }}</th>
+	</tr>
+{% for payroll in payrolls %}
+	<tr>
+		<td>{{ payroll.name }}</td>
+		<td>{{ moment(payroll.posting_date).format(frappe.datetime.get_user_fmt().toUpperCase()) }}</td>
+		<td>{{ __("From") }} {{ moment(payroll.start_date).format(frappe.datetime.get_user_fmt().toUpperCase()) }} {{ __("to") }} {{ moment(payroll.end_date).format(frappe.datetime.get_user_fmt().toUpperCase()) }}</td>
+		{% if payroll.salary_slip_based_on_timesheet == 0 %}
+			<td>{{ __("Monthly Salary") }}</td>
+		{% endif %}
+		{% if payroll.salary_slip_based_on_timesheet == 1 %}
+			<td>{{ __("Hourly Salary") }}</td>
+		{% endif %}
+		{% if payroll.docstatus == 0 %}
+			<td>
+				<button type="button" class="btn btn-warning" data-payroll="{{ payroll.name }}" onclick="">{{ __("Submitt Payroll") }}</button>
+				<button type="button" class="btn btn-success" data-payroll="{{ payroll.name }}" onclick="openPayroll(this);">{{ __("Open Payroll") }}</button>
+			</td>
+		{% endif %}
+		{% if payroll.docstatus == 1 %}
+			<td><button type="button" class="btn btn-success" data-payroll="{{ payroll.name }}" onclick="openPayroll(this);">{{ __("Open Payroll") }}</button></td>
+		{% endif %}
+	</tr>
+{% endfor %}
+</table>
