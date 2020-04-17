@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<rsm:CrossIndustryInvoice xmlns:a="urn:un:unece:uncefact:data:standard:QualifiedDataType:100" xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100" xmlns:qdt="urn:un:unece:uncefact:data:standard:QualifiedDataType:10" xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100"> <!-- rechnung-->
+
+  <rsm:ExchangedDocumentContext> <!-- prozesssteuerung-->
+    <ram:GuidelineSpecifiedDocumentContextParameter>  <!-- gruppierung der Anwendungsempfehlungesinfromationen-->
+      <ram:ID>urn:cen.eu:en16931:2017#compliant#urn:factur-x.eu:1p0:basic</ram:ID> <!-- spezifikationskennung-->
+    </ram:GuidelineSpecifiedDocumentContextParameter> 
+  </rsm:ExchangedDocumentContext>
+
+  <rsm:ExchangedDocument> <!-- Gruppierung der Eigenschaften, die das ganze Dokument betreffen -->
+    <ram:ID>{{rechnungsnummer}}</ram:ID> <!-- Rechnungsnummer-->
+    <ram:TypeCode>SINV</ram:TypeCode> <!-- Code für den Rechnungstyp-->
+    <ram:IssueDateTime>  <!-- REchnungsdatum-->
+      <udt:DateTimeString format="102">20200305</udt:DateTimeString> <!-- format needs to be specified-->
+    </ram:IssueDateTime>
+
+    <ram:IncludedNote> <!-- Freitext zur rechnung, mitteilung dazu etc.-->
+      <ram:Content>Rechnung gemäß Bestellung vom 01.03.2020.</ram:Content> <!-- Freitext zur rechnung, mitteilung dazu etc.-->
+    </ram:IncludedNote>
+    <ram:IncludedNote> <!-- Freitext zur rechnung, MUSS NICHT ZWINGEN ADDRESSE HABEN/SEIN-->
+      <ram:Content>Lieferant GmbH				
+Lieferantenstraße 20				
+80333 München				
+Deutschland				
+Geschäftsführer: Hans Muster
+Handelsregisternummer: H A 123
+      </ram:Content>
+    </ram:IncludedNote>
+    <ram:IncludedNote>
+      <ram:Content>Unsere GLN: 4000001123452
+Ihre GLN: 4000001987658
+Ihre Kundennummer: GE2020211
+Zahlbar innerhalb 30 Tagen netto bis 04.04.2020, 3% Skonto innerhalb 10 Tagen bis 15.03.2020.
+      </ram:Content>
+    </ram:IncludedNote>
+  </rsm:ExchangedDocument> <!-- SCHLUSS-Gruppierung der Eigenschaften, die das ganze Dokument betreffen -->
+
+
+  <rsm:SupplyChainTradeTransaction>     <!-- Gruppierung der Informationen zum Geschäftsvorfall -->
+    <ram:IncludedSupplyChainTradeLineItem> <!--Rechnungsposition -->
+
+      <ram:AssociatedDocumentLineDocument> <!-- Gruppierung von allgemeinen Positionsangaben -->
+        <ram:LineID>1</ram:LineID> <!-- Kennung der Rechnungsposition -->
+      </ram:AssociatedDocumentLineDocument> <!-- SCHLUSS-Gruppierung von allgemeinen Positionsangaben -->
+
+      <ram:SpecifiedTradeProduct> <!-- Artikelinformationen -->
+        <ram:GlobalID schemeID="0160">4012345001235</ram:GlobalID> <!-- Kennung eines Artikels nach registriertem Schema -->
+        <ram:Name>GTIN: 4012345001235, Unsere Art.-Nr.: TB100A4, Trennblätter A4 </ram:Name> <!-- Artikelname -->
+      </ram:SpecifiedTradeProduct> <!-- SCHLUSS-Artikelinformationen -->
+
+	     <ram:SpecifiedLineTradeAgreement> <!-- Detailinformationen zum Preis -->
+        <ram:NetPriceProductTradePrice> <!-- Detailinformationen zum Nettopreis des Artikels -->
+          <ram:ChargeAmount>9.90</ram:ChargeAmount> <!-- Nettopreis des Artikels -->
+        </ram:NetPriceProductTradePrice>
+      </ram:SpecifiedLineTradeAgreement> <!-- SCHLUSS-Detailinformationen zum Preis -->
+
+      <ram:SpecifiedLineTradeDelivery> <!-- Gruppierung von Lieferangaben aus Positionsebene -->
+        <ram:BilledQuantity unitCode="C62">20.0000</ram:BilledQuantity> <!-- In Rechnung gestellte Menge, ///unitcode=Code der Maßeinheit der in Rechnung gestellten Menge/// -->
+      </ram:SpecifiedLineTradeDelivery>
+
+      <ram:SpecifiedLineTradeSettlement> <!-- Gruppierung von Angaben zur Abrechnung auf Positionsebene -->
+	      <ram:ApplicableTradeTax> <!-- Umsatzsteuerinformationen auf der Ebene der Rechnungsposition-->
+        <ram:TypeCode>VAT</ram:TypeCode> <!-- Steuerart (Code)-->
+        <ram:CategoryCode>S</ram:CategoryCode> <!-- Code der Umsatzsteuerkategorie des in Rechnung gestellten Artikels --> 
+          <ram:RateApplicablePercent>19</ram:RateApplicablePercent> <!-- Umsatzsteuersatz für den in Rechnung gestellten Artikel-->
+        </ram:ApplicableTradeTax> <!-- SCHLUSS-Umsatzsteuerinformationen auf der Ebene der Rechnungsposition-->
+
+        <ram:SpecifiedTradeSettlementLineMonetarySummation> <!-- Detailinformationen zu Positionssummen-->
+          <ram:LineTotalAmount>198.00</ram:LineTotalAmount> <!-- Nettobetrag der Rechnungsposition-->
+        </ram:SpecifiedTradeSettlementLineMonetarySummation>
+
+      </ram:SpecifiedLineTradeSettlement> <!-- SCHLUSS-Gruppierung von Angaben zur Abrechnung auf Positionsebene-->
+    </ram:IncludedSupplyChainTradeLineItem>  <!--SCHLUSS-Rechnungsposition -->
+
+    <ram:ApplicableHeaderTradeAgreement>  <!-- Gruppierung der Vertragsangaben-->
+      <ram:SellerTradeParty> <!-- Verkäufer-->
+        <ram:Name>Lieferant GmbH</ram:Name> <!-- Name des verkäufers-->
+        <ram:PostalTradeAddress> <!-- Detailinformationen zur Geschäftsanschrift des Verkäufers-->
+          <ram:PostcodeCode>80333</ram:PostcodeCode> <!-- Postleitzahl-->
+          <ram:LineOne>Lieferantenstraße 20</ram:LineOne> <!-- Adresszeile 1-->
+          <ram:CityName>München</ram:CityName> <!-- Ort/Stadt-->
+          <ram:CountryID>DE</ram:CountryID> <!--Ländercode z.B CH-->
+        </ram:PostalTradeAddress>
+        <ram:SpecifiedTaxRegistration> <!-- SEUQUENCE - Detailinformationen zu Steuerangaben des Verkäufers -->
+          <ram:ID schemeID="FC">201/113/40209</ram:ID> <!-- Steuernummer des Verkäufers, Umsatzsteueridentnummer des Verkäufers, //// schemeID = Art der Steuernummer des verkäufers-->
+        </ram:SpecifiedTaxRegistration>
+        <ram:SpecifiedTaxRegistration>
+          <ram:ID schemeID="VA">DE123456789</ram:ID>
+        </ram:SpecifiedTaxRegistration>
+      </ram:SellerTradeParty>
+
+      <ram:BuyerTradeParty> <!-- SEQUENCE- käufer -->
+        <ram:Name>Kunden AG Mitte</ram:Name> <!-- ame de käufers -->
+        <ram:PostalTradeAddress>
+          <ram:PostcodeCode>69876</ram:PostcodeCode> <!-- Postleitzahl -->
+          <ram:LineOne>Hans Muster</ram:LineOne> <!-- Adresszeile 1 -->
+          <ram:LineTwo>Kundenstraße 15</ram:LineTwo> <!-- Adresszeile 2 -->
+          <ram:CityName>Frankfurt</ram:CityName> <!-- Ort/Stadt -->
+          <ram:CountryID>DE</ram:CountryID> <!-- Ländercode z.B CH -->
+        </ram:PostalTradeAddress>
+      </ram:BuyerTradeParty>
+
+    </ram:ApplicableHeaderTradeAgreement>
+
+
+    <ram:ApplicableHeaderTradeDelivery> <!-- Gruppierung von Lieferangaben -->
+      <ram:ActualDeliverySupplyChainEvent> <!-- Detailinformationen zur tatsächlichen Lieferung -->
+        <ram:OccurrenceDateTime> <!-- Tatsächlicher Lieferzeitpunkt -->
+          <udt:DateTimeString format="102">20200305</udt:DateTimeString> <!-- format beibehalten? -->
+        </ram:OccurrenceDateTime>
+      </ram:ActualDeliverySupplyChainEvent>
+    </ram:ApplicableHeaderTradeDelivery>
+
+
+    <ram:ApplicableHeaderTradeSettlement> <!-- Gruppierung von Angaben zur Zahlung und Rechnungsausgleich -->
+      <ram:InvoiceCurrencyCode>EUR</ram:InvoiceCurrencyCode> <!-- Code für die Rechnungswährung -->
+
+      <ram:ApplicableTradeTax> <!-- Detailinformationen zu Steuerangaben -->
+        <ram:CalculatedAmount>37.62</ram:CalculatedAmount> <!-- Kategoriespezifischer Steuerbetrag -->
+        <ram:TypeCode>VAT</ram:TypeCode> <!-- Steuerart (Code) -->
+        <ram:BasisAmount>198.00</ram:BasisAmount> <!-- Steuerbasisbetrag -->
+		<ram:CategoryCode>S</ram:CategoryCode> <!-- Code der Umsatzsteuerkategorie des in Rechnung gestellten Artikels/Steuerkategorie -->
+        <ram:RateApplicablePercent>19.00</ram:RateApplicablePercent> <!-- Umsatzsteuersatz für den in Rechnung gestellten Artikel -->
+      </ram:ApplicableTradeTax>
+
+	  <ram:SpecifiedTradePaymentTerms> <!-- Detailinformationen zu Zahlungsbedingungen -->
+        <ram:DueDateDateTime>
+          <udt:DateTimeString format="102">20200404</udt:DateTimeString> <!-- Fälligkeitsdatum -->
+        </ram:DueDateDateTime>
+      </ram:SpecifiedTradePaymentTerms>
+
+      <ram:SpecifiedTradeSettlementHeaderMonetarySummation> <!-- Gesamtsummen auf Dokumentenebene -->
+        <ram:LineTotalAmount>198.00</ram:LineTotalAmount> <!-- Summe der Nettobeträge aller Rechnungspositionen -->
+        <ram:ChargeTotalAmount>0.00</ram:ChargeTotalAmount> <!-- Summe der Zuschläge auf Dokumentenebene -->
+        <ram:AllowanceTotalAmount>0.00</ram:AllowanceTotalAmount> <!-- Summe der Abschläge auf Dokumentenebene -->
+        <ram:TaxBasisTotalAmount>198.00</ram:TaxBasisTotalAmount> <!-- Rechnungsgesamtbetrag ohne Umsatzsteuer -->
+		<ram:TaxTotalAmount currencyID="EUR">37.62</ram:TaxTotalAmount> <!-- Gesamtbetrag der Rechnungsumsatzsteuer Steuergesamtbetrag in Buchungswährung, /////währungCODE, z.B CHF////-->
+        <ram:GrandTotalAmount>235.62</ram:GrandTotalAmount> <!-- Rechnungsgesamtbetrag einschließlich Umsatzsteuer -->
+		<ram:DuePayableAmount>235.62</ram:DuePayableAmount> <!-- Fälliger Zahlungsbetrag -->
+      </ram:SpecifiedTradeSettlementHeaderMonetarySummation>
+
+    </ram:ApplicableHeaderTradeSettlement>
+  </rsm:SupplyChainTradeTransaction>
+</rsm:CrossIndustryInvoice>
